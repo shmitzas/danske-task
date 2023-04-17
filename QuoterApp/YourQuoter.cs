@@ -12,7 +12,7 @@ namespace QuoterApp
         {
             _marketOrders = new List<MarketOrder>();
             var marketOrderSource = new HardcodedMarketOrderSource();
-            RetrieveMarketOrders(marketOrderSource, 1);
+            RetrieveMarketOrders(marketOrderSource, 5);
 
             // Refreshed market orders every 10 seconds on a separate thread
             var thread = new Thread(() =>
