@@ -11,16 +11,16 @@ namespace QuoterApp
         public YourQuoter()
         {
             _marketOrders = new List<MarketOrder>();
-            var _marketOrderSource = new HardcodedMarketOrderSource();
-            RetrieveMarketOrders(_marketOrderSource, 1);
+            var marketOrderSource = new HardcodedMarketOrderSource();
+            RetrieveMarketOrders(marketOrderSource, 1);
 
             // Refreshed market orders every 10 seconds on a separate thread
             var thread = new Thread(() =>
             {
                 while(true)
                 {
-                    var marketOrderSource = new HardcodedMarketOrderSource();
-                    RetrieveMarketOrders(marketOrderSource, 10);
+                    marketOrderSource = new HardcodedMarketOrderSource();
+                    RetrieveMarketOrders(marketOrderSource, 60);
                 }
             });
             thread.Start();
