@@ -14,6 +14,7 @@ namespace QuoterApp
             var _marketOrderSource = new HardcodedMarketOrderSource();
             RetrieveMarketOrders(_marketOrderSource, 1);
 
+            // Refreshed market orders every 10 seconds on a separate thread
             var thread = new Thread(() =>
             {
                 while(true)
@@ -39,7 +40,7 @@ namespace QuoterApp
                 thread.Start();
                 thread.Join(TimeSpan.FromSeconds(timeoutLimit));
 
-                var order = _lastOrder as MarketOrder;
+                var order = (MarketOrder)_lastOrder;
                 try
                 {
                     if (order == null || order == new MarketOrder())
@@ -57,6 +58,7 @@ namespace QuoterApp
             _marketOrders = tempOrders;
         }
 
+        // Calculates the best price for a given quantity of an instrument
         public double GetQuote(string instrumentId, int quantity)
         {
             var orders = new List<MarketOrder>();
@@ -113,6 +115,7 @@ namespace QuoterApp
             return Math.Round(totalPrice, 2);
         }
 
+        // Calculates the volume weighted average price for an instrument
         public double GetVolumeWeightedAveragePrice(string instrumentId)
         {
             var orders = new List<MarketOrder>();
